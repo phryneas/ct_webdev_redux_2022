@@ -1,0 +1,217 @@
+reTypewriter Snapshots v1
+
+--01----------
+import { Reducer } from "redux";
+import { DECREMENT, INCREMENT } from "../constants/counter";
+import { CounterActions, CounterState } from "../types/counter";
+
+const initialState: CounterState = { value: 0 };
+
+const counterReducer: Reducer<CounterState, CounterActions> = (
+  state = initialState,
+  action
+) => {
+  switch (action.type) {
+    case INCREMENT:
+      return { ...state, value: state.value + action.payload };
+    case DECREMENT:
+      return { ...state, value: state.value - action.payload };
+    default:
+      return state;
+  }
+};
+
+export default counterReducer;
+
+--02----------
+import { Reducer } from "redux";
+import { DECREMENT, INCREMENT } from "../constants/counter";
+import { CounterActions, CounterState } from "../types/counter";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+const initialState: CounterState = { value: 0 };
+
+const counterReducer: Reducer<CounterState, CounterActions> = (
+  state = initialState,
+  action
+) => {
+  switch (action.type) {
+    case INCREMENT:
+      return { ...state, value: state.value + action.payload };
+    case DECREMENT:
+      return { ...state, value: state.value - action.payload };
+    default:
+      return state;
+  }
+};
+
+export default counterReducer;
+
+-----options--
+pause: true
+
+--03----------
+import { Reducer } from "redux";
+import { DECREMENT, INCREMENT } from "../constants/counter";
+import { CounterActions, CounterState } from "../types/counter";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+const initialState: CounterState = { value: 0 };
+
+const slice = createSlice({
+  name: "counter",
+  initialState,
+  reducers: {},
+});
+
+const counterReducer: Reducer<CounterState, CounterActions> = (
+  state = initialState,
+  action
+) => {
+  switch (action.type) {
+    case INCREMENT:
+      return { ...state, value: state.value + action.payload };
+    case DECREMENT:
+      return { ...state, value: state.value - action.payload };
+    default:
+      return state;
+  }
+};
+
+export default counterReducer;
+
+-----options--
+pause: true
+
+--05----------
+import { Reducer } from "redux";
+import { DECREMENT, INCREMENT } from "../constants/counter";
+import { CounterActions, CounterState } from "../types/counter";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+const initialState: CounterState = { value: 0 };
+
+const slice = createSlice({
+  name: "counter",
+  initialState,
+  reducers: {
+    increment(state, action: PayloadAction<number>) {
+      state.value += action.payload;
+    },
+    decrement(state, action: PayloadAction<number>) {
+      state.value -= action.payload;
+    },
+  },
+});
+
+const counterReducer: Reducer<CounterState, CounterActions> = (
+  state = initialState,
+  action
+) => {
+  switch (action.type) {
+    case INCREMENT:
+      return { ...state, value: state.value + action.payload };
+    case DECREMENT:
+      return { ...state, value: state.value - action.payload };
+    default:
+      return state;
+  }
+};
+
+export default counterReducer;
+
+-----options--
+pause: true
+
+
+--06----------
+import { Reducer } from "redux";
+import { DECREMENT, INCREMENT } from "../constants/counter";
+import { CounterActions, CounterState } from "../types/counter";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+const initialState: CounterState = { value: 0 };
+
+
+const slice = createSlice({
+  name: "counter",
+  initialState,
+  reducers: {
+    increment(state, action: PayloadAction<number>) {
+      state.value += action.payload;
+    },
+    decrement(state, action: PayloadAction<number>) {
+      state.value -= action.payload;
+    },
+  },
+});
+
+const counterReducer: Reducer<CounterState, CounterActions> = (
+  state = initialState,
+  action
+) => {
+  switch (action.type) {
+    case INCREMENT:
+      return { ...state, value: state.value + action.payload };
+    case DECREMENT:
+      return { ...state, value: state.value - action.payload };
+    default:
+      return state;
+  }
+};
+
+export default slice.reducer;
+//                     ^?
+-----options--
+pause: true
+--07----------
+import { CounterState } from "../types/counter";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+const initialState: CounterState = { value: 0 };
+
+const slice = createSlice({
+  name: "counter",
+  initialState,
+  reducers: {
+    increment(state, action: PayloadAction<number>) {
+      state.value += action.payload;
+    },
+    decrement(state, action: PayloadAction<number>) {
+      state.value -= action.payload;
+    },
+  },
+});
+
+export default slice.reducer;
+//                     ^?
+
+-----options--
+pause: true
+--08----------
+import { CounterState } from "../types/counter";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+const initialState: CounterState = { value: 0 };
+
+const slice = createSlice({
+  name: "counter",
+  initialState,
+  reducers: {
+    increment(state, action: PayloadAction<number>) {
+      state.value += action.payload;
+    },
+    decrement(state, action: PayloadAction<number>) {
+      state.value -= action.payload;
+    },
+  },
+});
+
+export default slice.reducer;
+//                     ^?
+
+export const { increment, decrement } = slice.actions;
+//                ^?
+-----options--
+pause: true
+--------------

@@ -1,0 +1,585 @@
+reTypewriter Snapshots v1
+
+--01----------
+// I'll spare us the useless splitting into 4 files...
+
+import { Dispatch, Reducer } from "redux";
+
+type UsersResponse = { data: Array<{ email: string }> };
+
+export const GET_USERS_PENDING = "GET_USERS_PENDING";
+export const GET_USERS_FULFILLED = "GET_USERS_FULFILLED";
+export const GET_USERS_REJECTED = "GET_USERS_REJECTED";
+
+export type PendingAction = { type: typeof GET_USERS_PENDING };
+export type FulfilledAction = {
+  type: typeof GET_USERS_FULFILLED;
+  payload: UsersResponse;
+};
+export type RejectedAction = {
+  type: typeof GET_USERS_REJECTED;
+  error: unknown;
+};
+
+export const pending = (): PendingAction => ({ type: GET_USERS_PENDING });
+export const fulfilled = (payload: UsersResponse): FulfilledAction => ({
+  type: GET_USERS_FULFILLED,
+  payload,
+});
+export const rejected = (error: unknown): RejectedAction => ({
+  type: GET_USERS_REJECTED,
+  error,
+});
+
+export type ApiActions = PendingAction | FulfilledAction | RejectedAction;
+
+export interface ApiState {
+  status: "uninitialized" | "pending" | "fulfilled" | "rejected";
+  data?: UsersResponse;
+  error?: unknown;
+}
+
+const initialState: ApiState = { status: "uninitialized" };
+
+const apiReducer: Reducer<ApiState, ApiActions> = (
+  state = initialState,
+  action
+) => {
+  switch (action.type) {
+    case GET_USERS_PENDING:
+      return { ...state, status: "pending" };
+    case GET_USERS_FULFILLED:
+      return { status: "fulfilled", data: action.payload, error: undefined };
+    case GET_USERS_REJECTED:
+      return { status: "rejected", error: action.error, data: undefined };
+    default:
+      return state;
+  }
+};
+
+export const getUsersThunk = () => async (dispatch: Dispatch) => {
+  dispatch(pending());
+  let lastAction: FulfilledAction | RejectedAction;
+  try {
+    const result = await fetch("https://reqres.in/api/users");
+    const json = await result.json();
+    lastAction = fulfilled(json);
+  } catch (e) {
+    lastAction = rejected(e);
+  }
+  dispatch(lastAction);
+};
+
+export default apiReducer;
+
+--02----------
+// I'll spare us the useless splitting into 4 files...
+
+import { Dispatch, Reducer } from "redux";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+
+type UsersResponse = { data: Array<{ email: string }> };
+
+export const GET_USERS_PENDING = "GET_USERS_PENDING";
+export const GET_USERS_FULFILLED = "GET_USERS_FULFILLED";
+export const GET_USERS_REJECTED = "GET_USERS_REJECTED";
+
+export type PendingAction = { type: typeof GET_USERS_PENDING };
+export type FulfilledAction = {
+  type: typeof GET_USERS_FULFILLED;
+  payload: UsersResponse;
+};
+export type RejectedAction = {
+  type: typeof GET_USERS_REJECTED;
+  error: unknown;
+};
+
+export const pending = (): PendingAction => ({ type: GET_USERS_PENDING });
+export const fulfilled = (payload: UsersResponse): FulfilledAction => ({
+  type: GET_USERS_FULFILLED,
+  payload,
+});
+export const rejected = (error: unknown): RejectedAction => ({
+  type: GET_USERS_REJECTED,
+  error,
+});
+
+export type ApiActions = PendingAction | FulfilledAction | RejectedAction;
+
+export interface ApiState {
+  status: "uninitialized" | "pending" | "fulfilled" | "rejected";
+  data?: UsersResponse;
+  error?: unknown;
+}
+
+const initialState: ApiState = { status: "uninitialized" };
+
+const apiReducer: Reducer<ApiState, ApiActions> = (
+  state = initialState,
+  action
+) => {
+  switch (action.type) {
+    case GET_USERS_PENDING:
+      return { ...state, status: "pending" };
+    case GET_USERS_FULFILLED:
+      return { status: "fulfilled", data: action.payload, error: undefined };
+    case GET_USERS_REJECTED:
+      return { status: "rejected", error: action.error, data: undefined };
+    default:
+      return state;
+  }
+};
+
+export const getUsersThunk = () => async (dispatch: Dispatch) => {
+  dispatch(pending());
+  let lastAction: FulfilledAction | RejectedAction;
+  try {
+    const result = await fetch("https://reqres.in/api/users");
+    const json = await result.json();
+    lastAction = fulfilled(json);
+  } catch (e) {
+    lastAction = rejected(e);
+  }
+  dispatch(lastAction);
+};
+
+export default apiReducer;
+
+-----options--
+pause: true
+
+
+
+--03----------
+// I'll spare us the useless splitting into 4 files...
+
+import { Dispatch, Reducer } from "redux";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
+type UsersResponse = { data: Array<{ email: string }> };
+
+export const GET_USERS_PENDING = "GET_USERS_PENDING";
+export const GET_USERS_FULFILLED = "GET_USERS_FULFILLED";
+export const GET_USERS_REJECTED = "GET_USERS_REJECTED";
+
+export type PendingAction = { type: typeof GET_USERS_PENDING };
+export type FulfilledAction = {
+  type: typeof GET_USERS_FULFILLED;
+  payload: UsersResponse;
+};
+export type RejectedAction = {
+  type: typeof GET_USERS_REJECTED;
+  error: unknown;
+};
+
+export const pending = (): PendingAction => ({ type: GET_USERS_PENDING });
+export const fulfilled = (payload: UsersResponse): FulfilledAction => ({
+  type: GET_USERS_FULFILLED,
+  payload,
+});
+export const rejected = (error: unknown): RejectedAction => ({
+  type: GET_USERS_REJECTED,
+  error,
+});
+
+export type ApiActions = PendingAction | FulfilledAction | RejectedAction;
+
+export interface ApiState {
+  status: "uninitialized" | "pending" | "fulfilled" | "rejected";
+  data?: UsersResponse;
+  error?: unknown;
+}
+
+const initialState: ApiState = { status: "uninitialized" };
+
+const apiReducer: Reducer<ApiState, ApiActions> = (
+  state = initialState,
+  action
+) => {
+  switch (action.type) {
+    case GET_USERS_PENDING:
+      return { ...state, status: "pending" };
+    case GET_USERS_FULFILLED:
+      return { status: "fulfilled", data: action.payload, error: undefined };
+    case GET_USERS_REJECTED:
+      return { status: "rejected", error: action.error, data: undefined };
+    default:
+      return state;
+  }
+};
+
+export const _getUsersThunk = () => async (dispatch: Dispatch) => {
+  dispatch(pending());
+  let lastAction: FulfilledAction | RejectedAction;
+  try {
+    const result = await fetch("https://reqres.in/api/users");
+    const json = await result.json();
+    lastAction = fulfilled(json);
+  } catch (e) {
+    lastAction = rejected(e);
+  }
+  dispatch(lastAction);
+};
+
+export const getUsersThunk = createAsyncThunk("users/get", async () => {
+  const result = await fetch("https://reqres.in/api/users");
+  const json = await result.json();
+  return json as UsersResponse;
+});
+
+export default apiReducer;
+
+--04----------
+// I'll spare us the useless splitting into 4 files...
+
+import { Dispatch, Reducer } from "redux";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
+type UsersResponse = { data: Array<{ email: string }> };
+
+export const GET_USERS_PENDING = "GET_USERS_PENDING";
+export const GET_USERS_FULFILLED = "GET_USERS_FULFILLED";
+export const GET_USERS_REJECTED = "GET_USERS_REJECTED";
+
+export type PendingAction = { type: typeof GET_USERS_PENDING };
+export type FulfilledAction = {
+  type: typeof GET_USERS_FULFILLED;
+  payload: UsersResponse;
+};
+export type RejectedAction = {
+  type: typeof GET_USERS_REJECTED;
+  error: unknown;
+};
+
+export const pending = (): PendingAction => ({ type: GET_USERS_PENDING });
+export const fulfilled = (payload: UsersResponse): FulfilledAction => ({
+  type: GET_USERS_FULFILLED,
+  payload,
+});
+export const rejected = (error: unknown): RejectedAction => ({
+  type: GET_USERS_REJECTED,
+  error,
+});
+
+export type ApiActions = PendingAction | FulfilledAction | RejectedAction;
+
+export interface ApiState {
+  status: "uninitialized" | "pending" | "fulfilled" | "rejected";
+  data?: UsersResponse;
+  error?: unknown;
+}
+
+const initialState: ApiState = { status: "uninitialized" };
+
+const apiReducer: Reducer<ApiState, ApiActions> = (
+  state = initialState,
+  action
+) => {
+  switch (action.type) {
+    case GET_USERS_PENDING:
+      return { ...state, status: "pending" };
+    case GET_USERS_FULFILLED:
+      return { status: "fulfilled", data: action.payload, error: undefined };
+    case GET_USERS_REJECTED:
+      return { status: "rejected", error: action.error, data: undefined };
+    default:
+      return state;
+  }
+};
+
+export const getUsersThunk = createAsyncThunk("users/get", async () => {
+  const result = await fetch("https://reqres.in/api/users");
+  const json = await result.json();
+  return json as UsersResponse;
+});
+
+export default apiReducer;
+
+-----options--
+pause: true
+
+
+
+--05----------
+// I'll spare us the useless splitting into 4 files...
+
+import { Dispatch, Reducer } from "redux";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
+type UsersResponse = { data: Array<{ email: string }> };
+
+export const GET_USERS_PENDING = "GET_USERS_PENDING";
+export const GET_USERS_FULFILLED = "GET_USERS_FULFILLED";
+export const GET_USERS_REJECTED = "GET_USERS_REJECTED";
+
+export type PendingAction = { type: typeof GET_USERS_PENDING };
+export type FulfilledAction = {
+  type: typeof GET_USERS_FULFILLED;
+  payload: UsersResponse;
+};
+export type RejectedAction = {
+  type: typeof GET_USERS_REJECTED;
+  error: unknown;
+};
+
+export const pending = (): PendingAction => ({ type: GET_USERS_PENDING });
+export const fulfilled = (payload: UsersResponse): FulfilledAction => ({
+  type: GET_USERS_FULFILLED,
+  payload,
+});
+export const rejected = (error: unknown): RejectedAction => ({
+  type: GET_USERS_REJECTED,
+  error,
+});
+
+export type ApiActions = PendingAction | FulfilledAction | RejectedAction;
+
+export interface ApiState {
+  status: "uninitialized" | "pending" | "fulfilled" | "rejected";
+  data?: UsersResponse;
+  error?: unknown;
+}
+
+const initialState: ApiState = { status: "uninitialized" };
+
+const apiReducer: Reducer<ApiState, ApiActions> = (
+  state = initialState,
+  action
+) => {
+  switch (action.type) {
+    case getUsersThunk.pending.type:
+      return { ...state, status: "pending" };
+    case getUsersThunk.fulfilled.type:
+      return { status: "fulfilled", data: action.payload, error: undefined };
+    case getUsersThunk.rejected.type:
+      return { status: "rejected", error: action.error, data: undefined };
+    default:
+      return state;
+  }
+};
+
+export const getUsersThunk = createAsyncThunk("users/get", async () => {
+  const result = await fetch("https://reqres.in/api/users");
+  const json = await result.json();
+  return json as UsersResponse;
+});
+
+export default apiReducer;
+
+--06----------
+// I'll spare us the useless splitting into 4 files...
+
+import { Dispatch, Reducer } from "redux";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
+type UsersResponse = { data: Array<{ email: string }> };
+
+export interface ApiState {
+  status: "uninitialized" | "pending" | "fulfilled" | "rejected";
+  data?: UsersResponse;
+  error?: unknown;
+}
+
+const initialState: ApiState = { status: "uninitialized" };
+
+const apiReducer: Reducer<ApiState, ApiActions> = (
+  state = initialState,
+  action
+) => {
+  switch (action.type) {
+    case getUsersThunk.pending.type:
+      return { ...state, status: "pending" };
+    case getUsersThunk.fulfilled.type:
+      return { status: "fulfilled", data: action.payload, error: undefined };
+    case getUsersThunk.rejected.type:
+      return { status: "rejected", error: action.error, data: undefined };
+    default:
+      return state;
+  }
+};
+
+export const getUsersThunk = createAsyncThunk("users/get", async () => {
+  const result = await fetch("https://reqres.in/api/users");
+  const json = await result.json();
+  return json as UsersResponse;
+});
+
+export default apiReducer;
+
+-----options--
+pause: true
+
+
+
+--07----------
+// I'll spare us the useless splitting into 4 files...
+
+import { Dispatch, Reducer } from "redux";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
+type UsersResponse = { data: Array<{ email: string }> };
+
+export interface ApiState {
+  status: "uninitialized" | "pending" | "fulfilled" | "rejected";
+  data?: UsersResponse;
+  error?: unknown;
+}
+
+const initialState: ApiState = { status: "uninitialized" };
+
+const apiReducer: Reducer<ApiState, ApiActions> = (
+  state = initialState,
+  action
+) => {
+  switch (action.type) {
+    case getUsersThunk.pending.type:
+      return { ...state, status: "pending" };
+    case getUsersThunk.fulfilled.type:
+      return { status: "fulfilled", data: action.payload, error: undefined };
+    case getUsersThunk.rejected.type:
+      return { status: "rejected", error: action.error, data: undefined };
+    default:
+      return state;
+  }
+};
+
+const apiSlice = createSlice({
+  name: "users",
+  initialState,
+  reducers: {},
+});
+
+export const getUsersThunk = createAsyncThunk("users/get", async () => {
+  const result = await fetch("https://reqres.in/api/users");
+  const json = await result.json();
+  return json as UsersResponse;
+});
+
+export default apiReducer;
+
+-----options--
+pause: true
+
+
+
+--08----------
+// I'll spare us the useless splitting into 4 files...
+
+import { Dispatch, Reducer } from "redux";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
+type UsersResponse = { data: Array<{ email: string }> };
+
+export interface ApiState {
+  status: "uninitialized" | "pending" | "fulfilled" | "rejected";
+  data?: UsersResponse;
+  error?: unknown;
+}
+
+const initialState: ApiState = { status: "uninitialized" };
+
+const apiReducer: Reducer<ApiState, ApiActions> = (
+  state = initialState,
+  action
+) => {
+  switch (action.type) {
+    case getUsersThunk.pending.type:
+      return { ...state, status: "pending" };
+    case getUsersThunk.fulfilled.type:
+      return { status: "fulfilled", data: action.payload, error: undefined };
+    case getUsersThunk.rejected.type:
+      return { status: "rejected", error: action.error, data: undefined };
+    default:
+      return state;
+  }
+};
+
+const apiSlice = createSlice({
+  name: "users",
+  initialState,
+  reducers: {},
+  extraReducers(builder) {
+    builder.addCase(getUsersThunk.pending, (state) => {
+      state.status = "pending";
+      // ^?
+    });
+    builder.addCase(getUsersThunk.fulfilled, (state, action) => {
+      state.status = "fulfilled";
+      state.data = action.payload;
+      //                    ^?
+      state.error = undefined;
+    });
+    builder.addCase(getUsersThunk.rejected, (state, action) => {
+      state.status = "rejected";
+      state.data = undefined;
+      state.error = action.error;
+      //                    ^?
+    });
+  },
+});
+
+export const getUsersThunk = createAsyncThunk("users/get", async () => {
+  const result = await fetch("https://reqres.in/api/users");
+  const json = await result.json();
+  return json as UsersResponse;
+});
+
+export default apiReducer;
+
+-----options--
+pause: true
+
+
+
+--09----------
+// I'll spare us the useless splitting into 4 files...
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
+type UsersResponse = { data: Array<{ email: string }> };
+
+export interface ApiState {
+  status: "uninitialized" | "pending" | "fulfilled" | "rejected";
+  data?: UsersResponse;
+  error?: unknown;
+}
+
+const initialState: ApiState = { status: "uninitialized" };
+
+const apiSlice = createSlice({
+  name: "users",
+  initialState,
+  reducers: {},
+  extraReducers(builder) {
+    builder.addCase(getUsersThunk.pending, (state) => {
+      state.status = "pending";
+      // ^?
+    });
+    builder.addCase(getUsersThunk.fulfilled, (state, action) => {
+      state.status = "fulfilled";
+      state.data = action.payload;
+      //                    ^?
+      state.error = undefined;
+    });
+    builder.addCase(getUsersThunk.rejected, (state, action) => {
+      state.status = "rejected";
+      state.data = undefined;
+      state.error = action.error;
+      //                    ^?
+    });
+  },
+});
+
+export const getUsersThunk = createAsyncThunk("users/get", async () => {
+  const result = await fetch("https://reqres.in/api/users");
+  const json = await result.json();
+  return json as UsersResponse;
+});
+
+export default apiSlice.reducer;
+
+-----options--
+pause: true
+
+
+
+--------------

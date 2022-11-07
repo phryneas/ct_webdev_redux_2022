@@ -1,0 +1,129 @@
+reTypewriter Snapshots v1
+
+--01----------
+import { createStore, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
+
+import rootReducer from "../reducers/rootReducer";
+
+const composeEnhancers =
+  (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+export const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(thunk))
+);
+--02----------
+import { legacy_createStore as createStore, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
+
+import rootReducer from "../reducers/rootReducer";
+
+const composeEnhancers =
+  (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+export const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(thunk))
+);
+-----options--
+pause: true
+
+
+
+--03----------
+import { legacy_createStore as createStore, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
+import { configureStore } from "@reduxjs/toolkit";
+
+import rootReducer from "../reducers/rootReducer";
+
+const composeEnhancers =
+  (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+export const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(thunk))
+);
+
+export const store = configureStore({
+  reducer: rootReducer,
+});
+-----options--
+pause: true
+
+
+
+--04----------
+import { configureStore } from "@reduxjs/toolkit";
+
+import rootReducer from "../reducers/rootReducer";
+
+const composeEnhancers =
+  (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+export const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(thunk))
+);
+
+export const store = configureStore({
+  reducer: rootReducer,
+});
+-----options--
+pause: true
+
+
+
+--05----------
+import { configureStore } from "@reduxjs/toolkit";
+
+import rootReducer from "../reducers/rootReducer";
+
+export const store = configureStore({
+  reducer: rootReducer,
+});
+--06----------
+import { configureStore } from "@reduxjs/toolkit";
+
+import counterReducer from "../reducers/counter";
+import apiReducer from "../reducers/api";
+
+export const store = configureStore({
+  reducer: rootReducer,
+});
+-----options--
+pause: true
+
+
+
+--07----------
+import { configureStore } from "@reduxjs/toolkit";
+
+import counterReducer from "../reducers/counter";
+import apiReducer from "../reducers/api";
+
+export const store = configureStore({
+  reducer: {
+    counter: counterReducer,
+    api: apiReducer,
+  },
+});
+--08----------
+import { configureStore } from "@reduxjs/toolkit";
+
+import counterReducer from "../reducers/counter";
+import apiReducer from "../reducers/api";
+
+export const store = configureStore({
+  reducer: {
+    counter: counterReducer,
+    api: apiReducer,
+  },
+});
+
+export type RootState = ReturnType<typeof store.getState>
+//              ^? 
+export type AppDispatch = typeof store.dispatch
+//              ^? 
+
+-----options--
+pause: true
+
+--------------

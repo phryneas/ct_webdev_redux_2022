@@ -1,6 +1,14 @@
-# WhoAmI
+<div style="display:flex;flex-direction:row;justify-content: space-evenly; margin-bottom: 2em">
+<img style="height: 5em" src="./mayflower.png" />
+<img style="height: 5em" src="./ct_webdev.png" />
 
-see [WhoAmI](./whoami.md)
+</div>
+
+# Redux im Jahr 2022
+
+## Alles anders?
+
+[Zur Talk-Beschreibung](https://ctwebdev.de/heisess/redux-im-jahr-2022-alles-anders)
 
 # Links
 

@@ -4,7 +4,7 @@ import { CounterActions, CounterState } from "../types/counter";
 
 const initialState: CounterState = { value: 0 };
 
-const apiReducer: Reducer<CounterState, CounterActions> = (
+const counterReducer: Reducer<CounterState, CounterActions> = (
   state = initialState,
   action
 ) => {
@@ -18,4 +18,4 @@ const apiReducer: Reducer<CounterState, CounterActions> = (
   }
 };
 
-export default apiReducer;
+export default counterReducer;
